@@ -1,7 +1,8 @@
 /*
- *  linux/fs/block_dev.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件封装对块设备的顺序读写操作：
+ * - block_read()/block_write()：按字节偏移访问块设备
+ * - 内部使用缓冲区层（getblk/bread/brelse）读写扇区
+ * - 按块大小对齐访问范围，并进行简单的越界检查
  */
 
 #include <errno.h>

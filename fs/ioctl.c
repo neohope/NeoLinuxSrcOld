@@ -1,7 +1,8 @@
 /*
- *  linux/fs/ioctl.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件是 ioctl 系统调用在 VFS 层的入口：
+ * - sys_ioctl()：根据文件描述符找到 inode，并区分管道/字符/块设备
+ * - 通过 ioctl_table[] 将命令分发给具体设备（如 TTY、管道等）
+ * 统一了不同设备驱动对 ioctl 的处理接口。
  */
 
 #include <string.h>

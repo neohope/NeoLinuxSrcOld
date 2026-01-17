@@ -1,22 +1,11 @@
 /*
- *  linux/fs/buffer.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现块缓冲区（buffer cache）管理：
+ * - 维护缓冲头链表、哈希表和空闲链表
+ * - 提供 getblk()/bread()/brelse() 等接口读写块设备数据
+ * - sys_sync()/sync_dev()：把脏缓冲区同步回磁盘
+ * 通过缓存最近访问的块，减少对块设备的直接 I/O，提高整体性能。
  */
 
-/*
- *  'buffer.c' implements the buffer-cache functions. Race-conditions have
- * been avoided by NEVER letting a interrupt change a buffer (except for the
- * data, of course), but instead letting the caller do it. NOTE! As interrupts
- * can wake up a caller, some cli-sti sequences are needed to check for
- * sleep-on-calls. These should be extremely quick, though (I hope).
- */
-
-/*
- * NOTE! There is one discordant note here: checking floppies for
- * disk change. This is where it fits best, I think, as it should
- * invalidate changed floppy-disk-caches.
- */
 
 #include <stdarg.h>
  

@@ -1,20 +1,8 @@
 /*
- *  linux/fs/exec.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- * #!-checking implemented by tytso.
- */
-
-/*
- * Demand-loading implemented 01.12.91 - no need to read anything but
- * the header into memory. The inode of the executable is put into
- * "current->executable", and page faults do the actual loading. Clean.
- *
- * Once more I can proudly say that linux stood up to being changed: it
- * was less than 2 hours work to get demand-loading completely implemented.
+ * 本文件实现执行新程序的内核逻辑：
+ * - do_execve()/sys_execve()：加载可执行文件并建立新地址空间和栈
+ * - 支持 #! 解释器脚本（例如 /bin/sh 脚本）的处理
+ * - 利用按需调页，把代码和数据段的实际装入推迟到缺页中断时完成
  */
 
 #include <signal.h>

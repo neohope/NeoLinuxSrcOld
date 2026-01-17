@@ -1,7 +1,8 @@
 /*
- *  linux/init/main.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件是 0.12 内核的 C 语言入口：
+ * - 在 setup 完成硬件探测后，进行内存划分和子系统初始化
+ * - 挂载根文件系统，初始化缓冲区和设备驱动
+ * - 创建第一个用户态进程，并最终启动 /bin/sh 作为登录 shell
  */
 
 #define __LIBRARY__
@@ -121,6 +122,13 @@ static char * envp_rc[] = { "HOME=/", NULL ,NULL };
 
 static char * argv[] = { "-/bin/sh",NULL };
 static char * envp[] = { "HOME=/usr/root", NULL, NULL };
+
+/*
+ * main() 是整个内核启动后的第一个 C 函数：
+ * - 读取从 setup 传来的内存和硬件信息
+ * - 初始化陷阱、块/字符设备、定时器、缓冲区、硬盘和软盘
+ * - 切换到第一个用户态任务 0，并在其中执行 init()
+ */
 
 struct drive_info { char dummy[32]; } drive_info;
 

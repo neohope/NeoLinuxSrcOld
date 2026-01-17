@@ -1,7 +1,8 @@
 /*
- *  linux/fs/pipe.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现 UNIX 管道机制：
+ * - read_pipe()/write_pipe()：在相关进程之间通过环形缓冲区传递数据
+ * - 使用 PIPE_HEAD/PIPE_TAIL 宏维护读写位置，并在满/空时睡眠和唤醒
+ * - 支持 SIGPIPE 处理，当没有读端或写端时向进程发送信号
  */
 
 #include <signal.h>

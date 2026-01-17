@@ -1,10 +1,11 @@
-/*
- *  linux/fs/bitmap.c
- *
- *  (C) 1991  Linus Torvalds
- */
 
-/* bitmap.c contains the code that handles the inode and block bitmaps */
+/*
+ * 本文件实现文件系统中的位图操作：
+ * - 使用位图记录每个磁盘块 / inode 是否已分配
+ * - free_block()/new_block()：释放或申请数据块
+ * - free_inode()/new_inode()：释放或申请 inode
+ * 通过简单的位运算和扫描，提高磁盘空间分配的效率。
+ */
 #include <string.h>
 
 #include <linux/sched.h>

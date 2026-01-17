@@ -1,7 +1,8 @@
 /*
- *  linux/fs/truncate.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现截断文件所需的块释放逻辑：
+ * - free_ind()/free_dind()：释放一级/二级间接块及其指向的数据块
+ * - truncate()：根据新的文件大小，释放多余的数据块并更新 inode
+ * 主要用于 sys_truncate()/sys_ftruncate() 调整普通文件长度时。
  */
 
 #include <linux/sched.h>
@@ -96,4 +97,3 @@ repeat:
 	inode->i_size = 0;
 	inode->i_mtime = inode->i_ctime = CURRENT_TIME;
 }
-

@@ -1,7 +1,7 @@
 /*
- *  linux/fs/stat.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现文件状态查询相关系统调用：
+ * - sys_stat()/sys_lstat()/sys_fstat()：根据路径或文件描述符获取状态
+ * - cp_stat()：把 inode 中的元数据复制到用户空间 struct stat 结构
  */
 
 #include <errno.h>

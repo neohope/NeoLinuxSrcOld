@@ -1,7 +1,8 @@
 /*
- *  linux/fs/file_dev.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件提供针对普通文件的读写实现：
+ * - file_read()：根据当前文件偏移 f_pos 计算逻辑块号并调用 bread()
+ * - file_write()：在写入时按块大小分配/读取缓冲区并更新文件大小
+ * - 读写完成后更新 inode 访问/修改时间
  */
 
 #include <errno.h>

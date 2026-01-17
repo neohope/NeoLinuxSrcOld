@@ -1,7 +1,8 @@
 /*
- *  linux/fs/fcntl.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现 fcntl()/dup()/dup2() 等与文件描述符相关的操作：
+ * - dupfd()：在大于等于给定起始值的位置上寻找新的 fd 并共享 file*
+ * - sys_dup()/sys_dup2()：复制已有文件描述符
+ * - sys_fcntl()：根据 cmd 设置/获取 close-on-exec 标志等属性
  */
 
 #include <string.h>

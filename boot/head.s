@@ -1,10 +1,4 @@
 /*
- *  linux/boot/head.s
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
  *  head.s contains the 32-bit startup code.
  *
  * NOTE!!! Startup happens at absolute address 0x00000000, which is also where

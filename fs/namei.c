@@ -1,11 +1,9 @@
 /*
- *  linux/fs/namei.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- * Some corrections by tytso.
+ * 本文件实现路径名解析到 inode 的过程：
+ * - namei()/open_namei()：将绝对或相对路径解析为目标 inode
+ * - dir_namei()/find_entry()/add_entry()：逐级遍历和修改目录项
+ * - 实现 sys_link()/sys_unlink()/sys_mkdir()/sys_rmdir()/sys_rename() 等
+ * 同时负责访问权限检查和对符号链接的跟随（follow_links）。
  */
 
 #include <linux/sched.h>

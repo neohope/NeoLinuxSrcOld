@@ -1,7 +1,8 @@
 /*
- *  linux/fs/read_write.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现 read()/write()/lseek() 等与文件读写相关的系统调用：
+ * - sys_lseek()：改变文件当前读写位置
+ * - sys_read()：根据文件类型分派到管道/字符设备/块设备/普通文件读取
+ * - sys_write()：同样根据文件类型进行写入并更新文件偏移
  */
 
 #include <sys/stat.h>
@@ -22,6 +23,12 @@ extern int file_read(struct m_inode * inode, struct file * filp,
 extern int file_write(struct m_inode * inode, struct file * filp,
 		char * buf, int count);
 
+/*
+ * sys_lseek()
+ * 调整文件描述符 fd 对应文件的当前位置：
+ * - origin 为 0/1/2 分别表示相对于文件开头/当前/文件末尾
+ * - 不允许对管道进行 lseek，并检查结果是否为负
+ */
 int sys_lseek(unsigned int fd,off_t offset, int origin)
 {
 	struct file * file;
@@ -52,6 +59,13 @@ int sys_lseek(unsigned int fd,off_t offset, int origin)
 	return file->f_pos;
 }
 
+/*
+ * sys_read()
+ * 从文件描述符 fd 读取数据到用户缓冲区 buf：
+ * - 验证缓冲区合法性，获取对应 inode
+ * - 按文件类型分派到管道、字符设备、块设备或常规文件读取函数
+ * - 对普通文件和目录，确保不读超过 i_size
+ */
 int sys_read(unsigned int fd,char * buf,int count)
 {
 	struct file * file;

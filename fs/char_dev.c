@@ -1,7 +1,8 @@
 /*
- *  linux/fs/char_dev.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现字符设备的读写分发：
+ * - 根据主设备号选择具体的读写处理函数（rw_ttyx/rw_ram/...） 
+ * - 对当前控制终端（/dev/tty）和虚拟终端进行特殊处理
+ * - 提供 rw_char() 作为字符设备读写的统一入口
  */
 
 #include <errno.h>

@@ -1,11 +1,9 @@
 /*
- *  linux/fs/super.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- * super.c contains code to handle the super-block tables.
+ * 本文件实现超级块（super block）表的管理：
+ * - super_block[]：内存中的超级块缓存数组
+ * - get_super()/read_super()：查找或从磁盘读取设备的超级块
+ * - mount_root()：挂载根文件系统，并初始化根 inode
+ * 同时提供对超级块加锁/解锁和等待的原语，防止并发访问冲突。
  */
 #include <linux/config.h>
 #include <linux/sched.h>

@@ -1,7 +1,9 @@
 /*
- *  linux/fs/inode.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件管理内存中的 inode 表：
+ * - inode_table[]：缓存最近使用的磁盘 inode
+ * - iget()/iput()：获取和释放 inode 引用，必要时从磁盘读入或写回
+ * - invalidate_inodes()/sync_inodes()：在设备卸载或同步时批量处理 inode
+ * 同时提供简单的锁机制防止并发修改同一个 inode。
  */
 
 #include <string.h>

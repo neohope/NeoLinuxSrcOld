@@ -1,7 +1,8 @@
 /*
- *  linux/fs/open.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现与“打开/关闭/目录切换”等相关的系统调用：
+ * - sys_utime()/sys_access()：修改/检查文件时间戳和访问权限
+ * - sys_chdir()/sys_chroot()：改变当前工作目录或进程根目录
+ * - sys_open()/sys_close()：打开和关闭文件描述符
  */
 
 #include <string.h>
@@ -22,6 +23,13 @@ int sys_ustat(int dev, struct ustat * ubuf)
 	return -ENOSYS;
 }
 
+/*
+ * sys_utime()
+ * 修改指定文件的访问时间和修改时间：
+ * - 如果 times 非空，则从用户空间取出指定的时间戳
+ * - 否则把时间戳设置为当前时间 CURRENT_TIME
+ * - 更新 inode 的 i_atime/i_mtime 并标记为脏
+ */
 int sys_utime(char * filename, struct utimbuf * times)
 {
 	struct m_inode * inode;
@@ -73,6 +81,13 @@ int sys_access(const char * filename,int mode)
 	return -EACCES;
 }
 
+/*
+ * sys_chdir()
+ * 将当前进程的工作目录切换到给定路径：
+ * - 通过 namei() 解析出目标目录的 inode
+ * - 检查目标是否为目录类型
+ * - 释放旧的 pwd，并将 current->pwd 指向新的 inode
+ */
 int sys_chdir(const char * filename)
 {
 	struct m_inode * inode;

@@ -1,8 +1,9 @@
+
 /*
- * This file contains the procedures for the handling of select
- *
- * Created for Linux based loosely upon Mathius Lattner's minix
- * patches by Peter MacDonald. Heavily edited by Linus.
+ * 本文件实现多路 I/O 复用系统调用 select()：
+ * - multiple_wait()/do_select()：同时等待多个文件描述符的就绪状态
+ * - 使用等待队列和中断禁止，避免睡眠/唤醒过程中的竞争条件
+ * - 支持读/写/异常三个 fd 集合以及超时参数
  */
 
 #include <linux/fs.h>
