@@ -1,7 +1,7 @@
 /*
- *  linux/kernel/mktime.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件提供简单的时间转换函数 kernel_mktime()：
+ * - 将 CMOS 读取的日历时间（struct tm）转换为 UNIX 时间戳
+ * - 简单假设 1970-01-01 起始，不考虑复杂的时区和历史调整
  */
 
 #include <time.h>

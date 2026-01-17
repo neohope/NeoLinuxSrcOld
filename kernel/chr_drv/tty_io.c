@@ -1,14 +1,8 @@
 /*
- *  linux/kernel/tty_io.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- * 'tty_io.c' gives an orthogonal feeling to tty's, be they consoles
- * or rs-channels. It also implements echoing, cooked mode etc.
- *
- * Kill-line thanks to John T Kohl, who also corrected VMIN = VTIME = 0.
+ * 本文件实现 TTY 子系统的核心输入输出逻辑：
+ * - 维护 TTY 结构体、读写队列（read_q/write_q/secondary）
+ * - copy_to_cooked()：行规程处理（Canonical/Raw 模式）
+ * - tty_read()/tty_write()：字符设备读写通用入口
  */
 
 #include <ctype.h>

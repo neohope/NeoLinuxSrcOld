@@ -1,7 +1,8 @@
 /*
- *  linux/kernel/hd.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件是 AT 硬盘驱动（IDE）：
+ * - 负责硬盘初始化、读写请求处理（do_hd_request）
+ * - 响应硬盘中断（hd_interrupt），完成数据传输
+ * - 处理硬盘控制器命令、错误重试及分区表读取
  */
 
 /*

@@ -1,11 +1,7 @@
 /*
- * linux/kernel/math/div.c
- *
- * (C) 1991 Linus Torvalds
- */
-
-/*
- * temporary real division routine.
+ * 本文件实现临时实数 temp_real 的除法运算：
+ * - div64()：通过移位和减法试探计算 64 位除法结果
+ * - fdiv()：结合指数和符号，产生规格化的商
  */
 
 #include <linux/math_emu.h>

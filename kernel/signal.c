@@ -1,7 +1,8 @@
 /*
- *  linux/kernel/signal.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现内核的信号机制：
+ * - sys_signal()/sys_sigaction()：注册信号处理函数
+ * - sys_sgetmask()/sys_ssetmask()：获取/设置信号屏蔽码
+ * - do_signal()：内核态返回用户态前，检测并处理挂起的信号
  */
 
 #include <linux/sched.h>

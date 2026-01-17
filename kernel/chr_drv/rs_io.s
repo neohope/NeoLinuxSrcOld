@@ -1,10 +1,4 @@
 /*
- *  linux/kernel/rs_io.s
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
  *	rs_io.s
  *
  * This module implements the rs232 io interrupts.

@@ -5,6 +5,13 @@
  */
 
 /*
+ * 本文件实现块设备 I/O 的通用层：
+ * - 维护请求队列（request[]），提供 make_request() 创建 I/O 请求
+ * - 实现 ll_rw_block() 接口，将读写请求分发给具体设备的 request_fn
+ * - 提供 add_request() 电梯调度算法，优化磁盘读写顺序
+ */
+
+/*
  * This handles all read/write requests to block devices
  */
 #include <errno.h>

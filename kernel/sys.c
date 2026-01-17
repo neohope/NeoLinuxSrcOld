@@ -1,7 +1,9 @@
 /*
- *  linux/kernel/sys.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件收集了一批杂项系统调用的内核实现：
+ * - sys_time()/sys_stime()：获取/设置系统时间
+ * - sys_setuid()/sys_setgid()：设置进程的用户/组标识
+ * - sys_uname()：获取系统版本信息
+ * 以及其他一些简单或未实现的系统调用桩。
  */
 
 #include <errno.h>

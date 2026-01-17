@@ -1,13 +1,9 @@
 /*
- *  linux/kernel/panic.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现内核致命错误处理函数 panic()：
+ * - 当内核遇到无法恢复的错误时被调用
+ * - 打印错误信息，尝试同步磁盘（sys_sync），然后死循环停机
  */
 
-/*
- * This function is used through-out the kernel (includeinh mm and fs)
- * to indicate a major problem.
- */
 #include <linux/kernel.h>
 #include <linux/sched.h>
 

@@ -1,16 +1,8 @@
 /*
- *  linux/kernel/serial.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- *	serial.c
- *
- * This module implements the rs232 io functions
- *	void rs_write(struct tty_struct * queue);
- *	void rs_init(void);
- * and all interrupts pertaining to serial IO.
+ * 本文件是串行端口（rs232）驱动：
+ * - rs_init()：初始化串口控制器和中断向量
+ * - rs_write()：从 TTY 写队列中取数据，触发串口发送中断
+ * - 中断处理函数：响应串口接收/发送中断，将数据送入 TTY 读队列
  */
 
 #include <linux/tty.h>

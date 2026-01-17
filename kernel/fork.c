@@ -1,14 +1,8 @@
 /*
- *  linux/kernel/fork.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- *  'fork.c' contains the help-routines for the 'fork' system call
- * (see also system_call.s), and some misc functions ('verify_area').
- * Fork is rather simple, once you get the hang of it, but the memory
- * management can be a bitch. See 'mm/mm.c': 'copy_page_tables()'
+ * 本文件配合 system_call.s 实现 fork() 系统调用的内核辅助逻辑：
+ * - verify_area()：在写用户空间之前，确保对应页面存在并可写
+ * - copy_mem()：为子进程建立地址空间并复制页表，实现写时复制
+ * - copy_process()：复制当前进程的 task_struct 和 TSS，初始化子进程
  */
 #include <errno.h>
 
@@ -21,6 +15,11 @@ extern void write_verify(unsigned long address);
 
 long last_pid=0;
 
+/*
+ * verify_area()
+ * 在向用户空间写数据前，确保 [addr, addr+size) 范围内的每个页面
+ * 都已分配并设置为可写，必要时触发缺页并建立相应的页表映射。
+ */
 void verify_area(void * addr,int size)
 {
 	unsigned long start;
@@ -36,6 +35,13 @@ void verify_area(void * addr,int size)
 	}
 }
 
+/*
+ * copy_mem()
+ * 为 nr 号任务 p 建立新的代码段和数据段基址，复制当前进程的页表：
+ * - 检查当前进程是否为统一的代码/数据段
+ * - 把子进程的线性地址空间映射到 TASK_SIZE * nr 开始的位置
+ * - 调用 copy_page_tables() 复制页表，实现写时复制机制
+ */
 int copy_mem(int nr,struct task_struct * p)
 {
 	unsigned long old_data_base,new_data_base,data_limit;
@@ -64,6 +70,13 @@ int copy_mem(int nr,struct task_struct * p)
  *  Ok, this is the main fork-routine. It copies the system process
  * information (task[nr]) and sets up the necessary registers. It
  * also copies the data segment in it's entirety.
+ *
+ * copy_process()
+ * 创建一个新的内核任务结构，并初始化子进程的寄存器和内核栈：
+ * - 从当前进程复制 task_struct，大部分属性继承父进程
+ * - 为子进程分配一页内核栈，并设置 TSS 中各寄存器的初始值
+ * - 调整 PID、时间统计信息和文件描述符引用计数
+ * - 调用 copy_mem() 建立和复制子进程地址空间
  */
 int copy_process(int nr,long ebp,long edi,long esi,long gs,long none,
 		long ebx,long ecx,long edx, long orig_eax, 

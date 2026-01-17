@@ -8,6 +8,12 @@
  * Calculate the effective address.
  */
 
+/*
+ * 本文件计算 80387 指令使用的有效地址：
+ * - 解析 ModR/M 和 SIB 字节，结合寄存器内容得到线性地址
+ * - ea()：供数学仿真模块在访问用户操作数时使用
+ */
+
 #include <stddef.h>
 
 #include <linux/math_emu.h>

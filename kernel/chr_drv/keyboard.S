@@ -1,10 +1,4 @@
 /*
- *  linux/kernel/keyboard.S
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
  *	Thanks to Alfred Leung for US keyboard patches
  *		Wolfgang Thiel for German keyboard patches
  *		Marc Corsini for the French keyboard

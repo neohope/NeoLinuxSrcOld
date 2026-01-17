@@ -1,7 +1,8 @@
 /*
- * linux/kernel/math/convert.c
- *
- * (C) 1991 Linus Torvalds
+ * 本文件实现内部临时实数与多种外部表示之间的转换：
+ * - short_to_temp()/long_to_temp()：将 32/64 位浮点数转为 temp_real
+ * - temp_to_short()/temp_to_long()：从 temp_real 生成 IEEE 浮点数
+ * - 同时支持整数与 BCD 等格式的转换
  */
 
 #include <linux/math_emu.h>

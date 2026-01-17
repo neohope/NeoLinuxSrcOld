@@ -1,7 +1,8 @@
 /*
- *  linux/kernel/chr_drv/tty_ioctl.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件处理与终端相关的 ioctl 调用：
+ * - tty_ioctl()：分发各种 TTY 控制命令
+ * - 改变终端参数（波特率、流控、窗口大小等）
+ * - 设置/获取 termios 结构体，控制回显、信号生成等行为
  */
 
 #include <errno.h>

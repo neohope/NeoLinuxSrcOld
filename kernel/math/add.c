@@ -17,6 +17,13 @@
  * 61-bit accuracy never shows at all.
  */
 
+/*
+ * 本文件实现临时实数 temp_real 的加法运算：
+ * - 使用符号位编码到尾数中的技巧简化正负数处理
+ * - 在可接受精度范围内换取更简单和更快的实现
+ * - 提供 fadd() 供仿真主逻辑调用
+ */
+
 #include <linux/math_emu.h>
 
 #define NEGINT(a) \

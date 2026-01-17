@@ -1,12 +1,8 @@
 /*
- *  linux/kernel/vsprintf.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/* vsprintf.c -- Lars Wirzenius & Linus Torvalds. */
-/*
- * Wirzenius wrote this portably, Torvalds fucked it up :-)
+ * 本文件提供内核环境下的格式化输出支持：
+ * - 实现 vsprintf()，类似于标准 C 库的同名函数
+ * - 支持 %d, %x, %s 等常见格式说明符
+ * - 被 printk() 和其他内核模块广泛使用，不依赖用户态 C 库
  */
 
 #include <stdarg.h>

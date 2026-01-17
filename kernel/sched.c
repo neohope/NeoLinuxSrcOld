@@ -1,14 +1,8 @@
 /*
- *  linux/kernel/sched.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- * 'sched.c' is the main kernel file. It contains scheduling primitives
- * (sleep_on, wakeup, schedule etc) as well as a number of simple system
- * call functions (type getpid(), which just extracts a field from
- * current-task
+ * 本文件实现 0.12 内核的进程调度核心：
+ * - 维护任务数组、运行队列和定时器
+ * - 提供 sleep_on()/wakeup()/schedule() 等调度与睡眠原语
+ * - 实现若干简单的系统调用，如 getpid()/pause() 等
  */
 #include <linux/sched.h>
 #include <linux/kernel.h>
@@ -23,6 +17,13 @@
 #define _S(nr) (1<<((nr)-1))
 #define _BLOCKABLE (~(_S(SIGKILL) | _S(SIGSTOP)))
 
+/*
+ * show_task()
+ * 打印单个任务的关键调试信息：
+ * - 进程号、状态、父子关系
+ * - 任务内核栈的剩余空间情况
+ * 用于在调试内核调度时观察任务状态。
+ */
 void show_task(int nr,struct task_struct * p)
 {
 	int i,j = 4096-sizeof(struct task_struct);
@@ -51,6 +52,15 @@ void show_state(void)
 		if (task[i])
 			show_task(i,task[i]);
 }
+
+/*
+ * schedule()
+ * 内核的核心调度函数：
+ * - 扫描所有任务，根据 counter/priority 选择下一个可运行任务
+ * - 处理 TASK_UNINTERRUPTIBLE/TASK_INTERRUPTIBLE 等睡眠状态
+ * - 通过 switch_to() 完成任务切换
+ * 本函数在时钟中断或显式调用时被执行。
+ */
 
 #define LATCH (1193180/HZ)
 

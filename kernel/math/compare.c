@@ -8,6 +8,12 @@
  * temporary real comparison routines
  */
 
+/*
+ * 本文件实现对临时实数 temp_real 的比较指令仿真：
+ * - normalize()：规格化数值以便比较
+ * - ftst()/fcom()/fucom()：设置 80387 状态字中的条件标志位
+ */
+
 #include <linux/math_emu.h>
 
 #define clear_Cx() (I387.swd &= ~0x4500)

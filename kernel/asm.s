@@ -1,10 +1,4 @@
 /*
- *  linux/kernel/asm.s
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
  * asm.s contains the low-level code for most hardware faults.
  * page_exception is handled by the mm, so that isn't here. This
  * file also handles (hopefully) fpu-exceptions due to TS-bit, as

@@ -1,15 +1,8 @@
 /*
- *  linux/kernel/chr_drv/pty.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- *	pty.c
- *
- * This module implements the pty functions
- *	void mpty_write(struct tty_struct * queue);
- *	void spty_write(struct tty_struct * queue);
+ * 本文件实现伪终端（PTY）设备：
+ * - 成对提供 master/slave 终端，用于用户态程序模拟终端会话
+ * - mpty_write()/spty_write()：在 master 与 slave 之间转发数据
+ * - pty_copy()：从一端的写队列复制数据到另一端的读队列
  */
 
 #include <linux/tty.h>

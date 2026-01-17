@@ -1,7 +1,8 @@
 /*
- *  linux/kernel/floppy.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件是软盘驱动实现：
+ * - 处理软盘读写请求（do_fd_request）
+ * - 管理软驱马达启动/停止、磁头寻道、重校准
+ * - 处理软盘控制器（FDC）中断，检测磁盘更换
  */
 
 /*

@@ -1,7 +1,8 @@
 /*
- *  linux/kernel/exit.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现进程退出与回收逻辑：
+ * - sys_exit()/do_exit()：进程主动或被动退出，释放资源
+ * - sys_waitpid()：父进程等待子进程结束并获取状态
+ * - release()：回收已僵死进程的 task_struct 和内核栈
  */
 
 #define DEBUG_PROC_TREE
@@ -66,8 +67,8 @@ int bad_task_ptr(struct task_struct *p)
  * This routine scans the pid tree and make sure the rep invarient still
  * holds.  Used for debugging only, since it's very slow....
  *
- * It looks a lot scarier than it really is.... we're doing �nothing more
- * than verifying the doubly-linked list found�in p_ysptr and p_osptr, 
+ * It looks a lot scarier than it really is.... we're doing �nothing more
+ * than verifying the doubly-linked list found�in p_ysptr and p_osptr, 
  * and checking it corresponds with the process tree defined by p_cptr and 
  * p_pptr;
  */

@@ -1,15 +1,10 @@
 /*
- *  linux/kernel/traps.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件是硬件异常/陷阱的 C 级处理部分：
+ * - 配合 asm.s 中的汇编入口，处理除零、页错误、无效指令等异常
+ * - 根据异常类型打印调试信息（die）或向当前进程发送相应信号
+ * - 包含 trap_init() 初始化各中断向量门描述符
  */
 
-/*
- * 'Traps.c' handles hardware traps and faults after we have saved some
- * state in 'asm.s'. Currently mostly a debugging-aid, will be extended
- * to mainly kill the offending process (probably by giving it a signal,
- * but possibly by killing it outright if necessary).
- */
 #include <string.h>
 
 #include <linux/head.h>

@@ -1,10 +1,4 @@
 /*
- *  linux/kernel/system_call.s
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
  *  system_call.s  contains the system-call low-level handling routines.
  * This also contains the timer-interrupt handler, as some of the code is
  * the same. The hd- and flopppy-interrupts are also here.

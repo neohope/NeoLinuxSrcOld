@@ -8,6 +8,12 @@
  * temporary real multiplication routine.
  */
 
+/*
+ * 本文件实现临时实数 temp_real 的乘法运算：
+ * - mul64()：对 64 位尾数进行全精度乘法
+ * - fmul()：合并指数、处理符号并规格化结果
+ */
+
 #include <linux/math_emu.h>
 
 static void shift(int * c)

@@ -1,7 +1,8 @@
 /*
- * linux/kernel/math/math_emulate.c
- *
- * (C) 1991 Linus Torvalds
+ * 本文件是 80387 浮点指令的软件仿真入口：
+ * - 当没有硬件协处理器或浮点异常发生时，由内核转入此处处理
+ * - 负责解析指令、维护 I387 寄存器状态和 80 位临时实数栈
+ * - 调用 add/mul/div/compare/convert 等模块完成具体运算
  */
 
 /*

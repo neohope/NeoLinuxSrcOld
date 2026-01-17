@@ -4,6 +4,13 @@
  *  Written by Theodore Ts'o, 12/2/91
  */
 
+/*
+ * 本文件实现 RAM 磁盘块设备：
+ * - 在内存中划出一块区域作为伪磁盘
+ * - 支持 rd_init() 初始化，do_rd_request() 进行内存拷贝操作
+ * - 常用于启动阶段加载根文件系统
+ */
+
 #include <string.h>
 
 #include <linux/config.h>

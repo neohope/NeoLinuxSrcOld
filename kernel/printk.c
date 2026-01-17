@@ -1,14 +1,10 @@
 /*
- *  linux/kernel/printk.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现内核打印接口 printk()：
+ * - 使用内部 buffer 格式化字符串（调用 vsprintf）
+ * - 调用 console_print() 将结果输出到控制台
+ * - 是内核调试和信息输出的主要手段
  */
 
-/*
- * When in kernel-mode, we cannot use printf, as fs is liable to
- * point to 'interesting' things. Make a printf with fs-saving, and
- * all is well.
- */
 #include <stdarg.h>
 #include <stddef.h>
 

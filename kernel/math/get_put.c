@@ -9,6 +9,13 @@
  * ints/reals/BCD etc. This is the only part that concerns itself with
  * other than temporary real format. All other cals are strictly temp_real.
  */
+
+/*
+ * 本文件负责数学仿真中对用户空间操作：
+ * - 从用户内存取出各类整数/浮点/BCD 数据并转换为 temp_real
+ * - 将 temp_real 或中间结果按指定格式写回用户内存
+ * - 是浮点仿真代码与用户地址空间之间的唯一接口层
+ */
 #include <signal.h>
 
 #include <linux/math_emu.h>
