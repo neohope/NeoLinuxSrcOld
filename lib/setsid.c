@@ -1,7 +1,6 @@
 /*
- *  linux/lib/setsid.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件封装 setsid() 系统调用：
+ * - 创建新会话并使当前进程成为会话首进程
  */
 
 #define __LIBRARY__

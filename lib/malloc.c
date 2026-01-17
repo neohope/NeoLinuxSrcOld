@@ -45,6 +45,14 @@
  *	so it isn't all that bad.
  */
 
+/*
+ * 本文件实现内核用的小块内存分配器：
+ * - 按固定大小划分“桶”（bucket），每个物理页只存放同尺寸对象
+ * - malloc()/free()：在不睡眠的前提下从桶中分配和回收对象
+ * - 通过 bucket_desc 结构管理每个页上的空闲链表和引用计数
+ * 主要用于内核内部需要频繁、小规模分配的场景。
+ */
+
 #include <linux/kernel.h>
 #include <linux/mm.h>
 #include <asm/system.h>
@@ -229,4 +237,3 @@ found:
 	sti();
 	return;
 }
-

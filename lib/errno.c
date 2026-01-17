@@ -1,7 +1,6 @@
 /*
- *  linux/lib/errno.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件定义全局错误号变量 errno：
+ * - 供系统调用封装在出错时写入错误码
  */
 
 int errno;

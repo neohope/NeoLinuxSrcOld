@@ -1,25 +1,9 @@
 /*
- *  linux/tools/build.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- * This file builds a disk-image from three different files:
- *
- * - bootsect: max 510 bytes of 8086 machine code, loads the rest
- * - setup: max 4 sectors of 8086 machine code, sets up system parm
- * - system: 80386 code for actual system
- *
- * It does some checking that all files are of the correct type, and
- * just writes the result to stdout, removing headers and padding to
- * the right amount. It also writes some system data to stderr.
- */
-
-/*
- * Changes by tytso to allow root device specification
- *
- * Added swap-device specification: Linux 20.12.91
+ * 本文件是生成启动软盘/硬盘镜像的小工具：
+ * - 从 bootsect、setup、system 三个目标文件拼接出内核映像
+ * - 去掉可执行文件头部，并按固定扇区数对齐填充
+ * - 可以在镜像中写入默认根设备和交换设备号
+ * 一般在内核编译完成后由 Makefile 调用。
  */
 
 #include <stdio.h>	/* fprintf */

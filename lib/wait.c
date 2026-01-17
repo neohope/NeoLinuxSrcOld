@@ -1,7 +1,7 @@
 /*
- *  linux/lib/wait.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件封装 wait()/waitpid()：
+ * - 通过 _syscall3 调用内核 sys_waitpid
+ * - wait() 基于 waitpid(-1, ...) 实现，等待任意子进程结束
  */
 
 #define __LIBRARY__

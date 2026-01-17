@@ -1,7 +1,6 @@
 /*
- *  linux/lib/dup.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件封装 dup() 系统调用：
+ * - 在用户空间提供复制文件描述符的接口
  */
 
 #define __LIBRARY__

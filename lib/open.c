@@ -1,7 +1,7 @@
 /*
- *  linux/lib/open.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件实现用户空间的 open() 封装：
+ * - 使用可变参数传递 mode，并通过 int 0x80 调用内核 sys_open
+ * - 在出错时设置 errno 并返回 -1
  */
 
 #define __LIBRARY__

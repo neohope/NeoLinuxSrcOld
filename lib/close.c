@@ -1,7 +1,6 @@
 /*
- *  linux/lib/close.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件封装 close() 系统调用：
+ * - 关闭给定文件描述符
  */
 
 #define __LIBRARY__

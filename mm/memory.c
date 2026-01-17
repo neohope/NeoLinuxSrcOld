@@ -1,31 +1,9 @@
 /*
- *  linux/mm/memory.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- * demand-loading started 01.12.91 - seems it is high on the list of
- * things wanted, and it should be easy to implement. - Linus
- */
-
-/*
- * Ok, demand-loading was easy, shared pages a little bit tricker. Shared
- * pages started 02.12.91, seems to work. - Linus.
- *
- * Tested sharing by executing about 30 /bin/sh: under the old kernel it
- * would have taken more than the 6M I have free, but it worked well as
- * far as I could see.
- *
- * Also corrected some "invalidate()"s - I wasn't doing enough of them.
- */
-
-/*
- * Real VM (paging to/from disk) started 18.12.91. Much more work and
- * thought has to go into this. Oh, well..
- * 19.12.91  -  works, somewhat. Sometimes I get faults, don't know why.
- *		Found it. Everything seems to work now.
- * 20.12.91  -  Ok, making the swap-device changeable like the root.
+ * 本文件是 0.12 的内存管理核心：
+ * - 通过 mem_map[] 记录每个物理页的使用计数
+ * - 提供 free_page()/get_free_page() 等页面分配与释放接口
+ * - 实现 copy_page_tables()/free_page_tables() 支持进程地址空间复制
+ * - 在 do_no_page()/do_wp_page() 中处理中断导致的缺页和写时复制
  */
 
 #include <signal.h>
@@ -49,6 +27,12 @@ unsigned char mem_map [ PAGING_PAGES ] = {0,};
 /*
  * Free a page of memory at physical address 'addr'. Used by
  * 'free_page_tables()'
+ *
+ * free_page()
+ * 释放以物理地址 addr 标识的页面：
+ * - 忽略内核保留区域（LOW_MEM 以下）
+ * - 通过 mem_map[] 递减该页的引用计数，计数归零时才真正释放
+ * - 如果计数已经为 0 再次释放，则触发 panic 提示内存管理错误
  */
 void free_page(unsigned long addr)
 {

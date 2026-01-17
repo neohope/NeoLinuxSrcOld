@@ -1,12 +1,9 @@
 /*
- *  linux/mm/swap.c
- *
- *  (C) 1991  Linus Torvalds
- */
-
-/*
- * This file should contain most things doing the swapping from/to disk.
- * Started 18.12.91
+ * 本文件实现简单的页面换入/换出机制（交换区）：
+ * - 使用 swap_bitmap 记录交换分区中每个页槽是否被占用
+ * - get_swap_page()/swap_free()：分配和释放交换区中的页槽
+ * - swap_in()/swap_out()：在物理内存和交换区之间移动页内容
+ * 支持在内存紧张时把不常用页面写到磁盘上，缓解内存压力。
  */
 
 #include <string.h>

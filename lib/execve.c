@@ -1,7 +1,6 @@
 /*
- *  linux/lib/execve.c
- *
- *  (C) 1991  Linus Torvalds
+ * 本文件封装 execve() 系统调用：
+ * - 在当前进程地址空间内加载并执行新程序
  */
 
 #define __LIBRARY__
