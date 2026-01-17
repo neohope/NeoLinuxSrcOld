@@ -1,3 +1,10 @@
+/*
+ * 本文件定义了进程调度相关的核心结构和宏：
+ * - task_struct：进程控制块(PCB)，包含状态、寄存器、信号、文件描述符等所有信息
+ * - 调度参数：HZ(时钟频率), NR_TASKS(最大进程数), TASK_SIZE(任务地址空间大小)
+ * - 状态定义：TASK_RUNNING, TASK_INTERRUPTIBLE 等
+ * - 宏函数：FIRST_TASK, LAST_TASK, CURRENT 等用于访问任务数组
+ */
 #ifndef _SCHED_H
 #define _SCHED_H
 

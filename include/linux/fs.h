@@ -1,4 +1,11 @@
 /*
+ * 本文件定义了文件系统相关的数据结构：
+ * - file/m_inode/super_block：内存中的文件、inode、超级块结构
+ * - file_system_type：文件系统类型描述
+ * - 文件操作宏：IS_RDONLY, IS_NOT_BLOCK_DEV 等
+ * - 设备号定义：MAJOR, MINOR 宏
+ */
+/*
  * This file has definitions for some important file table
  * structures etc.
  */

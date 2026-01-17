@@ -1,3 +1,10 @@
+/*
+ * 本文件定义了内存管理相关的常量和接口：
+ * - PAGE_SIZE：页大小(4KB)
+ * - 内存操作接口：get_free_page(), free_page(), put_dirty_page()
+ * - 交换区接口：read_swap_page(), write_swap_page()
+ * - 异常处理：oom() (Out Of Memory)
+ */
 #ifndef _MM_H
 #define _MM_H
 
